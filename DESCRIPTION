@@ -4,7 +4,8 @@ Description: ANOM decision charts as used in technometrical computing.
 Version: 0.2
 Author: Philip Pallmann
 Maintainer: Philip Pallmann <pallmann@biostat.uni-hannover.de>
-Depends: R (>= 3.0.0), ggplot2, MCPAN, multcomp, SimComp, nparcomp
+Depends: R (>= 3.0.0)
+Imports: ggplot2, MCPAN, multcomp, SimComp, nparcomp
 Suggests: sandwich
 License: GPL (>= 2)
 LazyData: true
