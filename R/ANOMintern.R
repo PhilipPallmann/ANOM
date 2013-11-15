@@ -1,8 +1,6 @@
 ANOMintern <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.sided",
                        xlabel="Group", ylabel="Endpoint", printn=T, p=NULL, whichone){
   
-  require(ggplot2, quietly=T)
-  
   whichone <- match.arg(whichone, choices=c("glm", "ratio"))
   
   if(whichone=="ratio"){

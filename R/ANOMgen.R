@@ -1,8 +1,6 @@
 ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.sided",
                     xlabel="Group", ylabel="Endpoint", printn=T, p=NULL){
   
-  require(ggplot2, quietly=T)
-  
   if(is.null(gm)){
     gm <- weighted.mean(mu, n)
   }

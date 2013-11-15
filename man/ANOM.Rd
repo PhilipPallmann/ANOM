@@ -99,9 +99,9 @@ ANOM(het1)
 
 library(SimComp)
 het2 <- SimCiDiff(data=waterfilter, grp="brand", resp="colonies",
-                  type="GrandMean", alternative="less", covar.equal=F)
+                  type="GrandMean", alternative="less", covar.equal=FALSE)
 het2p <- SimTestDiff(data=waterfilter, grp="brand", resp="colonies",
-                     type="GrandMean", alternative="less", covar.equal=F)
+                     type="GrandMean", alternative="less", covar.equal=FALSE)
 ANOM(het2, stdep=waterfilter$colonies, stind=waterfilter$brand, pst=het2p)
 
 #######################
@@ -112,18 +112,18 @@ ANOM(het2, stdep=waterfilter$colonies, stind=waterfilter$brand, pst=het2p)
 
 library(SimComp)
 rel <- SimCiRat(data=waterfilter, grp="brand", resp="colonies",
-                type="GrandMean", alternative="less", covar.equal=T)
+                type="GrandMean", alternative="less", covar.equal=TRUE)
 relp <- SimTestRat(data=waterfilter, grp="brand", resp="colonies",
-                   type="GrandMean", alternative="less", covar.equal=T)
+                   type="GrandMean", alternative="less", covar.equal=TRUE)
 ANOM(rel, stdep=waterfilter$colonies, stind=waterfilter$brand, pst=relp)
 
 ## Heteroscedastic (with multiple degrees of freedom)
 
 library(SimComp)
 relh <- SimCiRat(data=waterfilter, grp="brand", resp="colonies",
-                 type="GrandMean", alternative="less", covar.equal=F)
+                 type="GrandMean", alternative="less", covar.equal=FALSE)
 relhp <- SimTestRat(data=waterfilter, grp="brand", resp="colonies",
-                    type="GrandMean", alternative="less", covar.equal=F)
+                    type="GrandMean", alternative="less", covar.equal=FALSE)
 ANOM(relh, stdep=waterfilter$colonies, stind=waterfilter$brand, pst=relhp)
 
 ##########################
@@ -140,16 +140,16 @@ Mat <- contrMat(ss, "GrandMean")
 
 library(nparcomp)
 mult <- mctp(colonies ~ brand, data=waterfilter, type="UserDefined",
-             contrast.matrix=Mat, alternative="less", info=F,
-             correlation=T, asy.method="mult.t")
+             contrast.matrix=Mat, alternative="less", info=FALSE,
+             correlation=TRUE, asy.method="mult.t")
 ANOM(mult)
            
 ## Using a range-preserving Fisher transform
 
 library(nparcomp)
 fish <- mctp(colonies ~ brand, data=waterfilter, type="UserDefined",
-             contrast.matrix=Mat, alternative="less", info=F,
-             correlation=T, asy.method="fisher")
+             contrast.matrix=Mat, alternative="less", info=FALSE,
+             correlation=TRUE, asy.method="fisher")
 ANOM(fish)
 
 #####################################
