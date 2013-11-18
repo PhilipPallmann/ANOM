@@ -1,6 +1,13 @@
 \documentclass[a4paper]{article}
 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{parskip}
+\usepackage{natbib}
+\bibpunct{(}{)}{;}{a}{}{,}
 \usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage[labelfont={bf}, margin=0.5cm]{caption}
 
 \title{Analysis of Means: Examples with Package \texttt{ANOM}}
 \date{\today}
@@ -12,6 +19,184 @@
 
 \tableofcontents
 
-huhu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+We load
+
+access data stored in \texttt{multcomp} and draw graphics with \texttt{ggplot2}.
+
+<<LIB, echo=FALSE, message=FALSE, warning=FALSE>>=
+library(ANOM)
+library(multcomp)
+library(ggplot2)
+@
+
+
+<<DATAES, message=FALSE, warning=FALSE>>=
+library(nlme)
+data(ergoStools)
+@
+
+<<DATAHG, message=FALSE, warning=FALSE>>=
+library(ANOM)
+data(hemoglobin)
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Durability of detergents}
+
+Scheffe (1959, p. 189)
+
+<<DET>>=
+detergent
+@
+
+<<DETGraph>>=
+ggplot(detergent, aes(x=detergent, y=plates)) + geom_boxplot()
+@
+
+Dishwashing detergent durability in an incomplete two-way design.
+
+How many plates washed before foam in the basin disappears?
+
+Dinner plates soiled in a standard way
+
+5 detergents
+
+10 blocks of 3 basins (and 3 dishwashers rotating after each)
+
+n=6 per detergent
+
+balanced incomplete blocks
+
+
+which ones are better than average?
+
+two-way ANOVA model without interactions
+
+<<DET1>>=
+detmod1 <- aov(plates ~ detergent + block, detergent)
+summary(detmod1)
+det1 <- glht(detmod1, mcp(detergent="GrandMean"))
+summary(det1)
+confint(det1)
+ANOM(det1)
+@
+
+
+\section{fattyacid}
+
+\section{penicillin}
+
+SCHEFFE 1959
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{ANOM with linear mixed-effects models}
+
+\citet{Pinheiro2000} describe data from an investigation of ergonomic stools performed by \citet{Wretenberg1993}. They had nine people assess the physical effort to rise from each of four stool types: a stool of ordinary height, a low ordinary stool, a one-legged stool, and a pneumatic stool. Each subject tested each stool type once and rated the perceived exertion on the so-called Borg scale, which takes values from 6 to 20. We wish to detect types of stools that are significantly more or less difficult to rise from compared to average.
+
+This is a complete block design; each of the four stools under study is evaluated nine times. One challenge is that the scoring is clearly subjective: a person who has general difficulties to rise is more likely to assign lower ratings than a healthy person. To account for this variability between raters, a linear mixed-effects model is our method of choice.
+
+The model for the $i$th individual has the general form
+\begin{equation*}
+\mathbf{y}_i = \mathbf{X}_i \boldsymbol{\beta} + \mathbf{Z}_i \mathbf{b}_i + \boldsymbol{\epsilon}_i
+\end{equation*}
+where $\mathbf{y}_i$ are the outcomes, $\boldsymbol{\beta}$ the fixed and $\mathbf{b}_i$ the random effects, $\mathbf{X}_i$ and $\mathbf{Z}_i$ the design matrices for the fixed and random effects, and $\boldsymbol{\epsilon}_i$ the residuals. We assume that $\mathbf{b}_i \sim \mathcal{N}(\mathbf{0}, \mathbf{D})$ and $\mathbf{e}_i \sim \mathcal{N}(\mathbf{0}, \mathbf{R}_i)$, and additionally $\operatorname{cov}(\mathbf{b}_i, \mathbf{e}_i) = \mathbf{0}$.
+
+In our ergonomic stools example, we model fixed stool effects and treat the test persons as random. We hereby make the assumption that the testers are representative of all people who could sit on these stools and that their scorings are normally distributed with between-rater variance $\sigma_b$.
+
+There are several concurrent and (in part) complementary frameworks for mixed-effects modeling which coexist in the R world. Here we illustrate ANOM using two of the most popular and best-established packages, \texttt{nlme} \citep{Pinheiro2013} and \texttt{lme4} \citep{Bates2013}.
+
+\subsection{Using \texttt{nlme}}
+
+We model the effort to rise (on the Borg scale) as a function of the type of stool and include random subject effects to acknowledge between-rater variability:
+
+<<NLME, fig.cap="ANOM decision chart for the ergonomic stool data based on a linear mixed-effects model.", fig.height=5>>=
+library(nlme)
+esmodel1 <- lme(effort ~ Type, random=~1|Subject, data=ergoStool)
+es1 <- glht(esmodel1, mcp(Type="GrandMean"), alternative="two.sided")
+ANOM(es1, xlabel="Stool Type", ylabel="Exertion (Borg Scale)")
+@
+
+\subsection{Using \texttt{lme4}}
+
+An identical graphic can be generated with the functionality in \texttt{lme4}:
+
+<<LME4, eval=FALSE>>=
+library(lme4)
+esmodel2 <- lmer(effort ~ Type + (1|Subject), data=ergoStool)
+es2 <- glht(esmodel2, mcp(Type="GrandMean"), alternative="two.sided")
+ANOM(es2, xlabel="Stool Type", ylabel="Exertion (Borg Scale)")
+@
+
+Note that there are instances when the two mixed-effects model packages cannot be used interchangeably. Only \texttt{nlme} supports imposing a pattern like compound symmetry or AR(1) on the covariance matrix of the random effects and/or residuals whereas \texttt{lme4}'s strong points are sophisticated random effects hierarchies and nested structures, and it also fits generalized linear mixed-effects models.
+
+\subsection{Ignoring the repeated structure}
+
+One may wonder what would happen if we did not account for the fact that each chair was tested by several individuals. We fit a simple linear model and observe that the decision limits drift apart so that stool type 4 is no longer significant. The reason is quite simple: when fitting a mixed-effects model, we partition the total variance of the data into a component explained by the variability among the nine raters and a residual component. If we ignore the clustered structure of the data and fit a standard linear model, all variability is summed up in the residual variance, thus making it harder to detect significant stool effects.
+
+<<MIXIGNORE, fig.cap="ANOM decision chart for the ergonomic stool data based on a standard linear model.", fig.height=5>>=
+esmodel3 <- lm(effort ~ Type, ergoStool)
+es3 <- glht(esmodel3, mcp(Type="GrandMean"), alternative="two.sided")
+ANOM(es3, xlabel="Stool Type", ylabel="Exertion (Borg Scale)")
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{ANOM in a two-way layout}
+
+\citet{Nelson2005} describe a trial on 30 male cancer patients in a balanced complete two-way layout. Each patient was treated with one therapy (chemo or radiation) and one out of three drugs (named 1, 2, and 3), and the level of hemoglobin was measured afterwards. The six drug-therapy combinations may be compared in a simplified pseudo-one-way layout where the new factor's levels are the combinations of therapy and drug:
+
+<<PSEUDOONEWAY, fig.cap="ANOM decision chart for the hemoglobin data based one a pseudo-one-way analysis.", fig.height=5>>=
+hemoglobin$the <- as.factor(abbreviate(hemoglobin$therapy))
+hemoglobin$td <- with(hemoglobin, the:drug)
+hemodel <- lm(level ~ td, hemoglobin)
+he <- glht(hemodel, mcp(td="GrandMean"), alternative="two.sided")
+ANOM(he, xlabel="Treatment", ylabel="Hemoglobin Level")
+@
+
+We find that chemotherapy together with drug 3 leads to hemoglobin levels that are significantly above the grand mean. On the contrary, if radiation therapy is combined with either drug 1 or 2, the levels of hemoglobin are close to the lower decision limit.
+
+Acting on the assumption that the two treatment factors ``therapy" and ``drug" do not interact, we may also investigate the marginal drug effects across both therapies:
+
+<<TWOWAY, fig.cap="ANOM decision chart for the hemoglobin data based on a two-way analysis.", fig.height=5>>=
+hemodel2 <- lm(level ~ drug + therapy, hemoglobin)
+he2 <- glht(hemodel2, mcp(drug="GrandMean"), alternative="two.sided")
+ANOM(he2, xlabel="Drug", ylabel="Hemoglobin Level")
+@
+
+Figure \ref{fig:hem2} shows that drug 3 raises hemoglobin levels significantly compared to the grand mean. Notice that this type of pooled analysis would be inept in the presence of a therapy-drug interaction; here one should rather perform separate drug comparisons for radiation and for chemotherapy.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{STUFF}
+
+Fragestellung
+
+Figures
+
+
+
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{vign}
 
 \end{document}
