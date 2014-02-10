@@ -6,6 +6,12 @@ Please report weird or unexpected behavior to Philip Pallmann <pallmann@biostat.
 
 #########################
 
+Version 0.3.1 (11 February 2014)
+
+- Minor changes to the references.
+
+#########################
+
 Version 0.3 (19 November 2013)
 
 - Added a vignette including a couple of worked examples. Type 'vignette("ANOM")' to check it out!
