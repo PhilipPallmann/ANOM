@@ -30,7 +30,7 @@ This is a generic tool that translates (simultaneous) confidence intervals into 
 An ANOM decision chart.
 }
 \references{
-Pallmann, P. and Hothorn, L. A. (2014) Analysis of means (ANOM): A generalized approach using R. Submitted to Technometrics.
+Pallmann, P. and Hothorn, L. A. (2014) Analysis of means (ANOM): A generalized approach using R. Submitted to Journal of Quality Technology.
 }
 \author{
 Philip Pallmann \email{pallmann@biostat.uni-hannover.de}
