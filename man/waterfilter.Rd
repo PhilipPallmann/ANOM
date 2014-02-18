@@ -16,7 +16,7 @@ Filtering performances of seven brands of water filters, measured as the number 
   }
 }
 \details{
-A high number of bacterial colonies on a filter corresponds to good performance of this particular device. Note that the dataset is unbalanced (n=2 for brands 4 and 7, n=3 for all others).
+A high number of bacterial colonies on a filter corresponds to good performance of this particular device. Note that the dataset is unbalanced (n=2 for brands 4 and 7, n=3 for all other brands).
 }
 \source{
 Hsu, J. C. (1984) Ranking and selection and multiple comparisons with the best. In: Santner, T. J. and Tamhane, A. C. (Editors) Design of Experiments: Ranking and Selection (Essays in Honor of Robert E. Bechhofer). Marcel Dekker, New York, NY, pp. 23--33.
