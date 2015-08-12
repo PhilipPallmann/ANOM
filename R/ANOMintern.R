@@ -5,6 +5,12 @@ ANOMintern <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two
   
   bg <- match.arg(bg, choices=c("gray", "grey", "white"))
   
+  if(bg=="white"){
+    back <- theme_bw()
+  }else{
+    back <- theme_gray()
+  }
+  
   if(whichone=="ratio"){
     
     if(is.null(gm)){
