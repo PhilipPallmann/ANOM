@@ -13,7 +13,7 @@
 %\VignetteEngine{knitr::knitr}
 
 \title{Analysis of means: Examples using package \texttt{ANOM}}
-\date{}
+\date{\today}
 \author{Philip Pallmann}
 
 \begin{document}
