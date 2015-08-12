@@ -110,14 +110,16 @@ InsectSprays$block <- as.factor(rep(1:6, each=2))
 A common distributional assumption for count data is Poisson, so it sounds like a good idea to fit a Poisson generalized linear model with a logarithmic link function to the data. However, recall that the variance of a Poisson random variable equals its expected value. This basic assumption is more often than not violated with real-world data, and we usually include a variance inflation factor $\phi$ in the model to cope with this overdispersion (or extra-Poisson variability).
 
 <<INSECTS>>=
-insmodel1 <- glm(count ~ spray + block, data=InsectSprays, family=quasipoisson(link="log"))
+insmodel1 <- glm(count ~ spray + block, data=InsectSprays,
+                 family=quasipoisson(link="log"))
 summary(insmodel1)$dispersion
 @
 
 In our case the estimated variance inflation of 19.8\% is negligible, hence we will most likely not harm our analysis when using a simple Poisson GLM without an overdispersion parameter. An analysis of deviance reveals that both treatment and block bring about highly significant effects.
 
 <<INSECTS2>>=
-insmodel2 <- glm(count ~ spray + block, data=InsectSprays, family=poisson(link="log"))
+insmodel2 <- glm(count ~ spray + block, data=InsectSprays,
+                 family=poisson(link="log"))
 anova(insmodel2, test="Chisq")
 @
 
@@ -143,7 +145,7 @@ Figure 3 shows that all six treatments are significantly different from the gran
 
 <<DATAES, message=FALSE, warning=FALSE>>=
 library(nlme)
-data(ergoStools)
+data(ergoStool)
 @
 
 This is a complete block design; each of the four stools under study is evaluated nine times. One challenge is that the scoring is clearly subjective e.g., a person suffering from chronic back pain is more likely to assign lower ratings than a healthy individual. To account for this variability between raters, a linear mixed-effects model is our method of choice.
