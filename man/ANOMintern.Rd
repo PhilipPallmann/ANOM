@@ -7,6 +7,6 @@ Internal Function
 Only for internal use.
 }
 \author{
-Philip Pallmann \email{pallmann@biostat.uni-hannover.de}
+Philip Pallmann \email{p.pallmann@lancaster.ac.uk}
 }
 \keyword{~dplot}

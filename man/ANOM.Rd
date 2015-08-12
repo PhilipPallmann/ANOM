@@ -65,7 +65,7 @@ Konietschke, F., Hothorn, L. A., Brunner, F. (2012) Rank-based multiple test pro
 Pallmann, P. and Hothorn, L. A. (2014) Analysis of means (ANOM): A generalized approach using R. Submitted to Journal of Quality Technology.
 }
 \author{
-Philip Pallmann \email{pallmann@biostat.uni-hannover.de}
+Philip Pallmann \email{p.pallmann@lancaster.ac.uk}
 }
 \note{
 Notice that some of the more sophisticated ANOM variants (ratios, nonparametric, heteroscedastic with multiple degrees of freedom) are limited to one-way layouts without covariates.

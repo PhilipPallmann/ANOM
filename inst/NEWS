@@ -2,7 +2,15 @@
 ### ANOM package news ###
 #########################
 
-Please report weird or unexpected behavior to Philip Pallmann <pallmann@biostat.uni-hannover.de>
+Please report weird or unexpected behavior to Philip Pallmann <p.pallmann@lancaster.ac.uk>
+
+#########################
+
+Version 0.4 (12 August 2015)
+
+- Moved the PDF vignette from folder inst/doc to vignettes.
+- Added nlme to Suggests.
+- Changed e-mail of the package maintainer.
 
 #########################
 

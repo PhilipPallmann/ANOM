@@ -33,7 +33,7 @@ An ANOM decision chart.
 Pallmann, P. and Hothorn, L. A. (2014) Analysis of means (ANOM): A generalized approach using R. Submitted to Journal of Quality Technology.
 }
 \author{
-Philip Pallmann \email{pallmann@biostat.uni-hannover.de}
+Philip Pallmann \email{p.pallmann@lancaster.ac.uk}
 }
 \note{
 The confidence intervals must arise from comparisons to the grand mean; otherwise the ANOM chart is meaningless!

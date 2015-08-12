@@ -1,13 +1,14 @@
 Package: ANOM
 Title: Analysis of Means
 Description: ANOM decision charts as used in technometrical computing.
-Version: 0.3.1
+Version: 0.4
 Author: Philip Pallmann
-Maintainer: Philip Pallmann <pallmann@biostat.uni-hannover.de>
+Maintainer: Philip Pallmann <p.pallmann@lancaster.ac.uk>
 Depends: R (>= 3.0.0)
 Imports: ggplot2, MCPAN, multcomp, nparcomp, SimComp
-Suggests: sandwich, knitr
+Suggests: sandwich, nlme, knitr
+VignetteBuilder: knitr
 License: GPL (>= 2)
 LazyData: true
-Date: 2013-02-11
+Date: 2015-08-12
 URL: https://github.com/PhilipPallmann/ANOM
