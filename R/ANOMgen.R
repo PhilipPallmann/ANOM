@@ -1,5 +1,5 @@
 ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.sided",
-                    xlabel="Group", ylabel="Endpoint", printn=T, p=NULL){
+                    xlabel="Group", ylabel="Endpoint", printn=T, p=NULL, bg="white"){
   
   if(is.null(gm)){
     gm <- weighted.mean(mu, n)
@@ -59,6 +59,14 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
     }
   }
   
+  bg <- match.arg(bg, choices=c("gray", "grey", "white"))
+  
+  if(bg=="white"){
+    back <- theme_bw()
+  }else{
+    back <- theme_gray()
+  }
+  
   if(dir=="two.sided"){
     
     basic <- ggplot(set, aes(x=grpf, y=mu)) +
@@ -76,6 +84,7 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
       annotate("text", label="UDL", x=max(grp)+0.4, y=udl[max(grp)], size=4, vjust=-0.75) +
       ylim(min(min(mu), min(ldl))-(gm-min(min(mu), min(ldl)))/5,
            max(max(mu), max(udl))+(max(max(mu), max(udl))-gm)/5) +
+      back +
       theme(axis.text.x=element_text(size=18), axis.text.y=element_text(size=18),
             axis.title.x=element_text(size=25), axis.title.y=element_text(size=25))
     
@@ -116,6 +125,7 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
       annotate("text", label="LDL", x=max(grp)+0.4, y=ldl[max(grp)], size=4, vjust=1.5) +
       ylim((min(min(mu), min(ldl))-(gm-min(min(mu), min(ldl)))/5)[1],
            (max(mu)+(max(mu)-gm)/5)[1]) +
+      back +
       theme(axis.text.x=element_text(size=18), axis.text.y=element_text(size=18),
             axis.title.x=element_text(size=25), axis.title.y=element_text(size=25))
     

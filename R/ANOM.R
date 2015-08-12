@@ -1,5 +1,5 @@
 ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
-                 stdep=NULL, stind=NULL, pst=NULL, pbin=NULL){
+                 stdep=NULL, stind=NULL, pst=NULL, pbin=NULL, bg="white"){
   
   if(!(class(mc)[1] %in% c("glht", "SimCi", "mctp", "binomRDci"))){
     stop("Please insert an object of class 'glht', 'SimCi', 'mctp', or 'binomRDci' for mc!")
@@ -69,15 +69,17 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
       pvals <- summary(mc)$test$pvalues[1:length(ss)]
     }
     
+    bg <- match.arg(bg, choices=c("gray", "grey", "white"))
+    
     if(modclass!="glm"){
       if(modclass=="lmerMod"){
         ANOMgen(mu=means, n=ss, lo=ci$confint[, "lwr"], up=ci$confint[, "upr"],
                 names=levels(mc$model@frame[, ii]), alternative=mc$alternative,
-                xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals)
+                xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg)
       }else{
         ANOMgen(mu=means, n=ss, lo=ci$confint[, "lwr"], up=ci$confint[, "upr"],
                 names=mc$model$xlevels[[1]], alternative=mc$alternative,
-                xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals)
+                xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg)
       }
     }
     
@@ -87,34 +89,34 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
         if(mc$alternative=="two.sided"){
           ANOMintern(mu=m*cit[, 1], n=ss, gm=m, lo=m*cit[, 2]-m, up=m*cit[, 3]-m,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
-                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, whichone="glm")
+                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg, whichone="glm")
         }
         if(mc$alternative=="greater"){
           ANOMintern(mu=m*cit[, 1], n=ss, gm=m, lo=m*cit[, 2]-m, up=Inf,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
-                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, whichone="glm")
+                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg, whichone="glm")
         }
         if(mc$alternative=="less"){
           ANOMintern(mu=m*cit[, 1], n=ss, gm=m, lo=-Inf, up=m*cit[, 3]-m,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
-                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, whichone="glm")
+                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg, whichone="glm")
         }
       }
       if(mc$model$family$family=="binomial"){
         if(mc$alternative=="two.sided"){
           ANOMintern(mu=cit[, 1], n=ss, gm=m, lo=cit[ ,2]-m, up=cit[ ,3]-m,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
-                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, whichone="glm")
+                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg, whichone="glm")
         }
         if(mc$alternative=="less"){
           ANOMintern(mu=cit[, 1], n=ss, gm=m, lo=-Inf, up=cit[ ,3]-m,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
-                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, whichone="glm")
+                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg, whichone="glm")
         }
         if(mc$alternative=="greater"){
           ANOMintern(mu=cit[, 1], n=ss, gm=m, lo=cit[ ,2]-m, up=Inf,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
-                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, whichone="glm")
+                     xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg, whichone="glm")
         }
       }
       
@@ -183,11 +185,11 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
     if(mc$test.class=="ratios"){
       ANOMintern(mu=100*as.vector(mc$estimate), n=ss, lo=100*as.vector(mc$lower),
                  up=100*as.vector(mc$upper), alternative=mc$alternative,
-                 xlabel=xlabel, ylabel=ylabel, printn=printn, p=ppp, whichone="ratio")
+                 xlabel=xlabel, ylabel=ylabel, printn=printn, p=ppp, bg=bg, whichone="ratio")
     }else{
       ANOMgen(mu=as.vector(mc$estimate)+grame, n=ss, lo=as.vector(mc$lower),
               up=as.vector(mc$upper), alternative=mc$alternative,
-              xlabel=xlabel, ylabel=ylabel, printn=printn, p=ppp)
+              xlabel=xlabel, ylabel=ylabel, printn=printn, p=ppp, bg=bg)
     }
     
     }
@@ -224,7 +226,7 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
               up=mc$Analysis$Upper, #abs(mc$Analysis$Estimator - mc$Analysis$Upper),
               names=colnames(mc$Contrast), alternative=mc$input$alternative,
               xlabel=xlabel, ylabel=ylabel,
-              printn=printn, p=pvals)
+              printn=printn, p=pvals, bg=bg)
     }
     
     if(mc$input$alternative=="greater"){
@@ -233,7 +235,7 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
               up=Inf,
               names=colnames(mc$Contrast), alternative=mc$input$alternative,
               xlabel=xlabel, ylabel=ylabel,
-              printn=printn, p=pvals)
+              printn=printn, p=pvals, bg=bg)
     }
     
     if(mc$input$alternative=="less"){
@@ -242,7 +244,7 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
               up=mc$Analysis$Upper, #abs(mc$Analysis$Estimator - mc$Analysis$Upper),
               names=colnames(mc$Contrast), alternative=mc$input$alternative,
               xlabel=xlabel, ylabel=ylabel,
-              printn=printn, p=pvals)
+              printn=printn, p=pvals, bg=bg)
     }
     
   }
@@ -283,7 +285,7 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
     ANOMgen(mu=mc$p, n=mc$n, lo=mc$conf.int[, "lower"],
             up=mc$conf.int[, "upper"], names=mc$names,
             alternative=mc$alternative, xlabel=xlabel, ylabel=ylabel,
-            printn=printn, p=ppp)
+            printn=printn, p=ppp, bg=bg)
     
   }
   

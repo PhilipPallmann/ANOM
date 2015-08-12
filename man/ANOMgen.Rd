@@ -8,7 +8,7 @@ Graphical representation of the analysis of means: convert simultaneous confiden
 }
 \usage{
 ANOMgen(mu, n=NULL, gm=NULL, lo, up, names, alternative="two.sided",
-        xlabel="Group", ylabel="Endpoint", printn=T, p=NULL)
+        xlabel="Group", ylabel="Endpoint", printn=T, p=NULL, bg="white")
 }
 \arguments{
   \item{mu}{A numeric vector of group means.}
@@ -22,6 +22,7 @@ ANOMgen(mu, n=NULL, gm=NULL, lo, up, names, alternative="two.sided",
   \item{ylabel}{A character string specifying the label of the vertical axis.}
   \item{printn}{A logical. Should per-group sample sizes be included in the chart? Default is \code{TRUE}. If \code{n} ist left at \code{NULL}, the function automatically sets \code{printn} to \code{FALSE}.}
   \item{p}{An (optional) numeric vector of (simultaneous) p-values to be printed.}
+  \item{bg}{A character string. Should the plot's background be \code{"white"} (default) or \code{"gray"} (or \code{"grey"})?}
 }
 \details{
 This is a generic tool that translates (simultaneous) confidence intervals into ANOM decision limits.

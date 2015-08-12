@@ -8,7 +8,7 @@ Compute an analysis of means (i.e., a multiple contrast test involving compariso
 }
 \usage{
 ANOM(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
-     stdep=NULL, stind=NULL, pst=NULL, pbin=NULL)
+     stdep=NULL, stind=NULL, pst=NULL, pbin=NULL, bg="white")
 }
 \arguments{
   \item{mc}{An object of class \code{glht}, \code{SimCi}, \code{mctp}, or \code{binomRDci} involving group comparisons with the grand mean of all groups. See details.}
@@ -20,6 +20,7 @@ ANOM(mc, xlabel=NULL, ylabel=NULL, printn=T, printp=T,
   \item{stind}{A factor specifying the levels of the independent variable. Only required if an object of class \code{SimCi} is inserted for \code{mc}, otherwise ignored. Default is \code{NULL}.}
   \item{pst}{An object of class \code{SimTest}. Only required if an object of class \code{SimCi} is inserted for \code{mc} and simultaneous p-values are to be printed (\code{printp=TRUE}), otherwise ignored. Default is \code{NULL}.}
   \item{pbin}{An object of class \code{binomRDtest}. Only required if an object of class \code{binomRDci} is inserted for \code{mc} and simultaneous p-values are to be printed (\code{printp=TRUE}), otherwise ignored. Default is \code{NULL}.}
+  \item{bg}{A character string. Should the plot's background be \code{"white"} (default) or \code{"gray"} (or \code{"grey"})?}
 }
 \details{
 The 'standard' version of ANOM is invoked by inserting a \code{glht} object (created with function \code{glht} from package \code{multcomp} using a contrast matrix of type \code{GrandMean}) for \code{mc}. The \code{glht} object must be based on one of the model types \code{aov}, \code{lm}, \code{glm}, \code{gls}, \code{lme}, or \code{lmer}. That is, ANOM is feasible not only for simple linear (ANOVA) models with Gaussian data, but indeed for a broad range of (semi-)parametric models e.g., with Poisson or binomial data, hierarchical and clustered structures, and more (Hothorn et al. 2008). If the underlying model is a Poisson or binomial GLM (involving log and logit link functions, respectively), the effects are automatically transformed back to counts (Poisson) or proportions (binomial).
