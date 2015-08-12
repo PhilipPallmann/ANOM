@@ -1,7 +1,0 @@
-\contentsline {section}{\numberline {1}Introduction}{1}{section.1}
-\contentsline {section}{\numberline {2}ANOM in a two-way layout}{2}{section.2}
-\contentsline {section}{\numberline {3}ANOM with (overdispersed) count data}{4}{section.3}
-\contentsline {section}{\numberline {4}ANOM with linear mixed-effects models}{6}{section.4}
-\contentsline {subsection}{\numberline {4.1}Using \texttt {nlme}}{6}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Using \texttt {lme4}}{6}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Ignoring the repeated structure}{8}{subsection.4.3}
