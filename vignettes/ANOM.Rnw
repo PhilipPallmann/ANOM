@@ -10,7 +10,7 @@
 \usepackage[labelfont={bf}, margin=0.5cm]{caption}
 
 %\VignetteIndexEntry{ANOM}
-%\VignetteEngine{knitr}
+%\VignetteEngine{knitr::knitr}
 
 \title{Analysis of means: Examples using package \texttt{ANOM}}
 \date{\today}
