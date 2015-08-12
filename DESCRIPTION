@@ -6,7 +6,7 @@ Author: Philip Pallmann
 Maintainer: Philip Pallmann <p.pallmann@lancaster.ac.uk>
 Depends: R (>= 3.0.0)
 Imports: ggplot2, MCPAN, multcomp, nparcomp, SimComp
-Suggests: sandwich, nlme, knitr
+Suggests: knitr, lme4, nlme, sandwich
 VignetteBuilder: knitr
 License: GPL (>= 2)
 LazyData: true

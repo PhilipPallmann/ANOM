@@ -9,7 +9,8 @@
 \usepackage[margin=1in]{geometry}
 \usepackage[labelfont={bf}, margin=0.5cm]{caption}
 
-%\VignetteIndexEntry{Examples using ANOM}
+%\VignetteIndexEntry{ANOM}
+%\VignetteEngine{knitr}
 
 \title{Analysis of means: Examples using package \texttt{ANOM}}
 \date{\today}
