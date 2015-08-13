@@ -8,8 +8,10 @@ Please report weird or unexpected behavior to Philip Pallmann <p.pallmann@lancas
 
 Version 0.4 (12 August 2015)
 
+- Added an option to switch between white or gray background.
 - Moved the PDF vignette from folder inst/doc to vignettes.
 - Added lme4 and nlme to Suggests.
+- Included a CITATION file.
 - Changed e-mail of the package maintainer.
 
 #########################
