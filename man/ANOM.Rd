@@ -71,7 +71,7 @@ Philip Pallmann \email{p.pallmann@lancaster.ac.uk}
 \note{
 Notice that some of the more sophisticated ANOM variants (ratios, nonparametric, heteroscedastic with multiple degrees of freedom) are limited to one-way layouts without covariates.
 }
-\examples{
+\examples{\donttest{
 ###############################################
 ### Standard ANOM (Gaussian, homoscedastic) ###
 ###############################################
@@ -198,5 +198,5 @@ library(multcomp)
 mod <- lm(absdev ~ brand, spring)
 test <- glht(mod, mcp(brand="GrandMean"))
 ANOM(test)
-}
+}}
 \keyword{~dplot}

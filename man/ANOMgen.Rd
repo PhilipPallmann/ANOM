@@ -39,7 +39,7 @@ Philip Pallmann \email{p.pallmann@lancaster.ac.uk}
 \note{
 The confidence intervals must arise from comparisons to the grand mean; otherwise the ANOM chart is meaningless!
 }
-\examples{
+\examples{\donttest{
 ### A toy example (n given, two-sided)
 groupmeans <- c(2.8, 2.3, 3.4, 5.6)
 samplesizes <- c(5, 5, 10, 5)
@@ -56,5 +56,5 @@ upp <- c(-0.2, -0.7, 0.2, 2.6)
 names <- c("1st", "2nd", "3rd", "4th")
 pvalues <- c(0.01, 0.003, 0.8, 1)
 ANOMgen(mu=groupmeans, gm=gm, lo=low, up=upp, names=names, alternative="less", p=pvalues)
-}
+}}
 \keyword{~dplot}
