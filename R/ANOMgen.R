@@ -1,6 +1,7 @@
 ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.sided",
                     xlabel="Group", ylabel="Endpoint", printn=TRUE, p=NULL, bg="white",
-                    axlsize=18, axtsize=25, npsize=5, psize=5, lwidth=1, fillcol="darkgray"){
+                    bgrid=TRUE, axlsize=18, axtsize=25, npsize=5, psize=5, lwidth=1,
+                    dlstyle="dashed", fillcol="darkgray"){
   
   if(is.null(gm)){
     gm <- weighted.mean(mu, n)
@@ -68,6 +69,12 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
     back <- theme_gray()
   }
   
+  if(bgrid==TRUE){
+    bgr <- element_line()
+  }else{
+    bgr <- element_blank()
+  }
+  
   if(dir=="two.sided"){
     
     basic <- ggplot(set, aes(x=grpf, y=mu)) +
@@ -76,8 +83,8 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
       ylab(ylabel) +
       geom_rect(aes(xmin=grp-0.5, xmax=grp+0.5, ymin=ldl, ymax=udl),
                 alpha=0.5, fill=fillcol, linetype=0) +
-      geom_segment(aes(x=grp-0.5, xend=grp+0.5, y=udl, yend=udl), size=lwidth, linetype=2) +
-      geom_segment(aes(x=grp-0.5, xend=grp+0.5, y=ldl, yend=ldl), size=lwidth, linetype=2) +
+      geom_segment(aes(x=grp-0.5, xend=grp+0.5, y=udl, yend=udl), size=lwidth, linetype=dlstyle) +
+      geom_segment(aes(x=grp-0.5, xend=grp+0.5, y=ldl, yend=ldl), size=lwidth, linetype=dlstyle) +
       geom_segment(aes(x=0.5, xend=max(grp)+0.5, y=gm, yend=gm), size=lwidth) +
       geom_segment(aes(x=grp, xend=grp, y=mu, yend=gm), size=lwidth) +
       geom_point(size=psize) +
@@ -89,7 +96,8 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
       theme(axis.text.x=element_text(size=axlsize),
             axis.text.y=element_text(size=axlsize),
             axis.title.x=element_text(size=axtsize),
-            axis.title.y=element_text(size=axtsize))
+            axis.title.y=element_text(size=axtsize),
+            panel.grid=bgr)
     
   }
   
@@ -101,7 +109,7 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
       ylab(ylabel) +
       geom_rect(aes(xmin=grp-0.5, xmax=grp+0.5, ymin=ldl, ymax=udl),
                 alpha=0.5, fill=fillcol, linetype=0) +
-      geom_segment(aes(x=grp-0.5, xend=grp+0.5, y=udl, yend=udl), size=lwidth, linetype=2) +
+      geom_segment(aes(x=grp-0.5, xend=grp+0.5, y=udl, yend=udl), size=lwidth, linetype=dlstyle) +
       geom_segment(aes(x=0.5, xend=max(grp)+0.5, y=gm, yend=gm), size=lwidth) +
       geom_segment(aes(x=grp, xend=grp, y=mu, yend=gm), size=lwidth) +
       geom_point(size=psize) +
@@ -112,7 +120,8 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
       theme(axis.text.x=element_text(size=axlsize),
             axis.text.y=element_text(size=axlsize),
             axis.title.x=element_text(size=axtsize),
-            axis.title.y=element_text(size=axtsize))
+            axis.title.y=element_text(size=axtsize),
+            panel.grid=bgr)
     
   }
   
@@ -124,7 +133,7 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
       ylab(ylabel) +
       geom_rect(aes(xmin=grp-0.5, xmax=grp+0.5, ymin=ldl, ymax=udl),
                 alpha=0.5, fill=fillcol, linetype=0) +
-      geom_segment(aes(x=grp-0.5, xend=grp+0.5, y=ldl, yend=ldl), size=lwidth, linetype=2) +
+      geom_segment(aes(x=grp-0.5, xend=grp+0.5, y=ldl, yend=ldl), size=lwidth, linetype=dlstyle) +
       geom_segment(aes(x=0.5, xend=max(grp)+0.5, y=gm, yend=gm), size=lwidth) +
       geom_segment(aes(x=grp, xend=grp, y=mu, yend=gm), size=lwidth) +
       geom_point(size=psize) +
@@ -135,7 +144,8 @@ ANOMgen <- function(mu, n=NULL, gm=NULL, lo, up, names=NULL, alternative="two.si
       theme(axis.text.x=element_text(size=axlsize),
             axis.text.y=element_text(size=axlsize),
             axis.title.x=element_text(size=axtsize),
-            axis.title.y=element_text(size=axtsize))
+            axis.title.y=element_text(size=axtsize),
+            panel.grid=bgr)
     
   }
   

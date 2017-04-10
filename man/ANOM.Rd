@@ -9,8 +9,8 @@ Compute an analysis of means (i.e., a multiple contrast test involving compariso
 \usage{
 ANOM(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
      stdep=NULL, stind=NULL, pst=NULL, pbin=NULL, bg="white",
-     axlsize=18, axtsize=25, npsize=5, psize=5, lwidth=1,
-     fillcol="darkgray")
+     bgrid=TRUE, axlsize=18, axtsize=25, npsize=5, psize=5,
+     lwidth=1, dlstyle="dashed", fillcol="darkgray")
 }
 \arguments{
   \item{mc}{An object of class \code{glht}, \code{SimCi}, \code{mctp}, or \code{binomRDci} involving group comparisons with the grand mean of all groups. See details.}
@@ -23,11 +23,13 @@ ANOM(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
   \item{pst}{An object of class \code{SimTest}. Only required if an object of class \code{SimCi} is inserted for \code{mc} and simultaneous p-values are to be printed (\code{printp=TRUE}), otherwise ignored. Default is \code{NULL}.}
   \item{pbin}{An object of class \code{binomRDtest}. Only required if an object of class \code{binomRDci} is inserted for \code{mc} and simultaneous p-values are to be printed (\code{printp=TRUE}), otherwise ignored. Default is \code{NULL}.}
   \item{bg}{A character string. Should the plot's background be \code{"white"} (default) or \code{"gray"} (or \code{"grey"})?}
+  \item{bgrid}{A logical. Should background grid lines be plotted? Default is \code{TRUE}.}
   \item{axlsize}{A numerical value specifying the font size of the axis labels. Default is \code{18}.}
   \item{axtsize}{A numerical value specifying the font size of the axis titles. Default is \code{25}.}
   \item{npsize}{A numerical value specifying the font size of the sample sizes and p-values (if printed). Default is \code{5}.}
   \item{psize}{A numerical value specifying the size of the points (group means). Default is \code{5}.}
   \item{lwidth}{A numerical value specifying the width of the lines (grand mean, decision limits, vertical connections). Default is \code{1}.}
+  \item{dlstyle}{A character string specifying the style of the decision limits. Default is \code{"dashed"}.}
   \item{fillcol}{A character string specifying the color of the area of no significant deviation from the grand mean. Default is \code{"darkgray"}.}
 }
 \details{

@@ -1,7 +1,7 @@
 ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
                  stdep=NULL, stind=NULL, pst=NULL, pbin=NULL, bg="white",
-                 axlsize=18, axtsize=25, npsize=5, psize=5, lwidth=1,
-                 fillcol="darkgray"){
+                 bgrid=TRUE, axlsize=18, axtsize=25, npsize=5, psize=5,
+                 lwidth=1, dlstyle="dashed", fillcol="darkgray"){
   
   if(!(class(mc)[1] %in% c("glht", "SimCi", "mctp", "binomRDci"))){
     stop("Please insert an object of class 'glht', 'SimCi', 'mctp', or 'binomRDci' for mc!")
@@ -80,14 +80,14 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
         ANOMgen(mu=means, n=ss, lo=ci$confint[, "lwr"], up=ci$confint[, "upr"],
                 names=levels(mc$model@frame[, ii]), alternative=mc$alternative,
                 xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg,
-                axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-                lwidth=lwidth, fillcol=fillcol)
+                bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+                psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol)
       }else{
         ANOMgen(mu=means, n=ss, lo=ci$confint[, "lwr"], up=ci$confint[, "upr"],
                 names=mc$model$xlevels[[1]], alternative=mc$alternative,
                 xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg,
-                axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-                lwidth=lwidth, fillcol=fillcol)
+                bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+                psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol)
       }
     }
     
@@ -98,22 +98,25 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
           ANOMintern(mu=m*cit[, 1], n=ss, gm=m, lo=m*cit[, 2]-m, up=m*cit[, 3]-m,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
                      xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg,
-                     axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-                     lwidth=lwidth, fillcol=fillcol, whichone="glm")
+                     bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+                     psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol,
+                     whichone="glm")
         }
         if(mc$alternative=="greater"){
           ANOMintern(mu=m*cit[, 1], n=ss, gm=m, lo=m*cit[, 2]-m, up=Inf,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
                      xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg,
-                     axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-                     lwidth=lwidth, fillcol=fillcol, whichone="glm")
+                     bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+                     psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol,
+                     whichone="glm")
         }
         if(mc$alternative=="less"){
           ANOMintern(mu=m*cit[, 1], n=ss, gm=m, lo=-Inf, up=m*cit[, 3]-m,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
                      xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg,
-                     axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-                     lwidth=lwidth, fillcol=fillcol, whichone="glm")
+                     bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+                     psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol,
+                     whichone="glm")
         }
       }
       if(mc$model$family$family=="binomial"){
@@ -121,22 +124,25 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
           ANOMintern(mu=cit[, 1], n=ss, gm=m, lo=cit[ ,2]-m, up=cit[ ,3]-m,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
                      xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg,
-                     axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-                     lwidth=lwidth, fillcol=fillcol, whichone="glm")
+                     bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+                     psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol,
+                     whichone="glm")
         }
         if(mc$alternative=="less"){
           ANOMintern(mu=cit[, 1], n=ss, gm=m, lo=-Inf, up=cit[ ,3]-m,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
                      xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg,
-                     axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-                     lwidth=lwidth, fillcol=fillcol, whichone="glm")
+                     bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+                     psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol,
+                     whichone="glm")
         }
         if(mc$alternative=="greater"){
           ANOMintern(mu=cit[, 1], n=ss, gm=m, lo=cit[ ,2]-m, up=Inf,
                      names=mc$model$xlevels[[1]], alternative=mc$alternative,
                      xlabel=xlabel, ylabel=ylabel, printn=printn, p=pvals, bg=bg,
-                     axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-                     lwidth=lwidth, fillcol=fillcol, whichone="glm")
+                     bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+                     psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol,
+                     whichone="glm")
         }
       }
       
@@ -206,14 +212,15 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
       ANOMintern(mu=100*as.vector(mc$estimate), n=ss, lo=100*as.vector(mc$lower),
                  up=100*as.vector(mc$upper), alternative=mc$alternative,
                  xlabel=xlabel, ylabel=ylabel, printn=printn, p=ppp, bg=bg,
-                 axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-                 lwidth=lwidth, fillcol=fillcol, whichone="ratio")
+                 bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+                 psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol,
+                 whichone="ratio")
     }else{
       ANOMgen(mu=as.vector(mc$estimate)+grame, n=ss, lo=as.vector(mc$lower),
               up=as.vector(mc$upper), alternative=mc$alternative,
               xlabel=xlabel, ylabel=ylabel, printn=printn, p=ppp, bg=bg,
-              axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize,
-              lwidth=lwidth, fillcol=fillcol)
+              bgrid=bgrid, axlsize=axlsize, axtsize=axtsize, npsize=npsize,
+              psize=psize, lwidth=lwidth, dlstyle=dlstyle, fillcol=fillcol)
     }
     
     }
@@ -250,9 +257,9 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
               up=mc$Analysis$Upper, #abs(mc$Analysis$Estimator - mc$Analysis$Upper),
               names=colnames(mc$Contrast), alternative=mc$input$alternative,
               xlabel=xlabel, ylabel=ylabel,
-              printn=printn, p=pvals, bg=bg,
+              printn=printn, p=pvals, bg=bg, bgrid=bgrid,
               axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize, lwidth=lwidth,
-              fillcol=fillcol)
+              dlstyle=dlstyle, fillcol=fillcol)
     }
     
     if(mc$input$alternative=="greater"){
@@ -261,9 +268,9 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
               up=Inf,
               names=colnames(mc$Contrast), alternative=mc$input$alternative,
               xlabel=xlabel, ylabel=ylabel,
-              printn=printn, p=pvals, bg=bg,
+              printn=printn, p=pvals, bg=bg, bgrid=bgrid,
               axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize, lwidth=lwidth,
-              fillcol=fillcol)
+              dlstyle=dlstyle, fillcol=fillcol)
     }
     
     if(mc$input$alternative=="less"){
@@ -272,9 +279,9 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
               up=mc$Analysis$Upper, #abs(mc$Analysis$Estimator - mc$Analysis$Upper),
               names=colnames(mc$Contrast), alternative=mc$input$alternative,
               xlabel=xlabel, ylabel=ylabel,
-              printn=printn, p=pvals, bg=bg,
+              printn=printn, p=pvals, bg=bg, bgrid=bgrid,
               axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize, lwidth=lwidth,
-              fillcol=fillcol)
+              dlstyle=dlstyle, fillcol=fillcol)
     }
     
   }
@@ -315,9 +322,9 @@ ANOM <- function(mc, xlabel=NULL, ylabel=NULL, printn=TRUE, printp=TRUE,
     ANOMgen(mu=mc$p, n=mc$n, lo=mc$conf.int[, "lower"],
             up=mc$conf.int[, "upper"], names=mc$names,
             alternative=mc$alternative, xlabel=xlabel, ylabel=ylabel,
-            printn=printn, p=ppp, bg=bg,
+            printn=printn, p=ppp, bg=bg, bgrid=bgrid,
             axlsize=axlsize, axtsize=axtsize, npsize=npsize, psize=psize, lwidth=lwidth,
-            fillcol=fillcol)
+            dlstyle=dlstyle, fillcol=fillcol)
     
   }
   
